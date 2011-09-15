@@ -52,28 +52,15 @@ int main(int argc, char** argv){
             }
         }
         /* sendrecv */
-        if (irank==0){
-            /*
-              MPI_Sendrecv (
-              &sendbuf,sendcount,sendtype,dest,sendtag, 
-              &recvbuf,recvcount,recvtype,source,recvtag, 
-              comm,&status) */
-            MPI_Sendrecv(&u[height-2][0], width-2, MPI_DOUBLE, 1, 0,
-                         &u[height-3][0], width-2, MPI_DOUBLE, 1, 0,
-                         MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-        } else if (irank == nrank-1){
-            MPI_Sendrecv(&u[-1][0], width-2, MPI_DOUBLE, nrank-2, 0,
-                         &u[0][0] , width-2, MPI_DOUBLE, nrank-2, 0,
-                         MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-        } else {
-            int upper = irank+1;
-            int lower = irank-1;
-            MPI_Sendrecv(&u[height-2][0], width-2, MPI_DOUBLE, upper, 0,
-                         &u[height-3][0], width-2, MPI_DOUBLE, upper, 0,
-                         MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-            MPI_Sendrecv(&u[-1][0], width-2, MPI_DOUBLE, lower, 0,
-                         &u[0][0] , width-2, MPI_DOUBLE, lower, 0,
-                         MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+        int north = irank<nrank-1 ? irank+1 : MPI_PROC_NULL;
+        int south = irank>0 ? irank-1 : MPI_PROC_NULL;
+
+        MPI_Sendrecv(&u[height-2][0], width-2, MPI_DOUBLE, north, 0,
+                     &u[height-3][0], width-2, MPI_DOUBLE, north, 0,
+                     MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+        MPI_Sendrecv(&u[-1][0], width-2, MPI_DOUBLE, south, 0,
+                     &u[0][0] , width-2, MPI_DOUBLE, south, 0,
+                     MPI_COMM_WORLD, MPI_STATUS_IGNORE);
         }
     } // end loop(k)
 
