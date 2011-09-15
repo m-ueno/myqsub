@@ -1,0 +1,32 @@
+Queue name:  sh20100
+Exit code :  0
+Start/End :  Wed Sep 14 15:28:30 JST 2011 / Wed Sep 14 15:28:36 JST 2011
+Elapse    :  00:00:06
+
+Reason
+  Request exited normally.
+
+  _Exit() value was 0.
+
+
+Allocated Resource
+  Virtual Nodes                   :         1 Node 
+  Before Free Memory
+    Total Large Page Memory       :         0 Mbyte 
+    Total Normal Page Memory      :  1887436800 Byte
+  After Free Memory
+    Total Large Page Memory       :         0 Mbyte 
+    Total Normal Page Memory      :  1887436800 Byte
+  CPUs                            :        16 CPU 
+  Execmode                        :         CHIP_SHare
+  Elapse time limit               :       600.000 sec
+
+Used Resource
+  Total System CPU Time           :        21 msec 
+  Total User CPU Time             :      5946 msec 
+  Total Large Page Memory         :         0 Mbyte 
+  Total Normal Page Memory        :   2228224 Byte
+  CPUs                            :         3 CPU 
+
++ cd /home/a/a0064164/work/EnshuB
++ ./a.out
