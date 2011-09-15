@@ -71,7 +71,7 @@ int main(int argc, char** argv){
             fprintf( udata, "\n" );
         }
         /* output: rank1 ~ n-2 */
-        for(int jrank=1;jrank<nrank-1;r++){
+        for(int jrank=1; jrank<nrank-1; jrank++){
             //MPI_Recv (&buf,count,datatype,source,tag,comm,&status)
             MPI_Recv( &u[0][-1], width*(height-2), MPI_DOUBLE, jrank, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE );
             for(j=0;j<height-2;j+=4){
