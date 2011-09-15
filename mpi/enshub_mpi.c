@@ -45,7 +45,7 @@ int main(int argc, char** argv){
         for(j=0;j<height-2;j++)
             for(i=0;i<width-2;i++)
                 un[j][i] = u[j][i] + ( -4*u[j][i] + u[j][i+1] + u[j][i-1] + u[j+1][i] + u[j-1][i] )*dth2;
-
+@
         for(j=0;j<height-2;j++){
             for(i=0;i<width-2;i++){
                 u[j][i] = un[j][i];
@@ -54,21 +54,12 @@ int main(int argc, char** argv){
         /* sendrecv */
         int north = irank<nrank-1 ? irank+1 : MPI_PROC_NULL;
         int south = irank>0 ? irank-1 : MPI_PROC_NULL;
-        /*
-        MPI_Sendrecv(&u[height-2][0], width-2, MPI_DOUBLE, north, 0,
-                     &u[height-3][0], width-2, MPI_DOUBLE, north, 0,
+        MPI_Sendrecv(&u[height-3][0], width-2, MPI_DOUBLE, north, 0,
+                     &u[-1][0] , width-2, MPI_DOUBLE, south, 0,
                      MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-        MPI_Sendrecv(&u[-1][0], width-2, MPI_DOUBLE, south, 0,
-                     &u[0][0] , width-2, MPI_DOUBLE, south, 0,
+        MPI_Sendrecv(&u[0][0], width-2, MPI_DOUBLE, south, 0,
+                     &u[height-2][0], width-2, MPI_DOUBLE, north, 0,
                      MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-        */
-        MPI_Sendrecv(&u[height-2][0], width-2, MPI_DOUBLE, north, 0,
-                     &u[0][0] , width-2, MPI_DOUBLE, south, 0,
-                     MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-        MPI_Sendrecv(&u[-1][0], width-2, MPI_DOUBLE, south, 0,
-                     &u[height-3][0], width-2, MPI_DOUBLE, north, 0,
-                     MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-        
     } // end loop(k)
 
     /* print */
