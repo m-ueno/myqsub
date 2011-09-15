@@ -15,12 +15,12 @@ int main(int argc, char** argv){
     int height=(NY-1)/nrank+2, width=NX+1;
     
     double (*u)[width];
-    u=(double(*)[width])malloc(height*width*sizeof(double));
-    u=(double(*)[width])(&u[1][1]);
+    u = (double(*)[width])malloc(height*width*sizeof(double));
+    u = (double(*)[width])(&u[1][1]);
 
     double (*un)[width];
-    un=(double(*)[width])malloc(height*width*sizeof(double));
-    un=(double(*)[width])(&un[1][1]);
+    un = (double(*)[width])malloc(height*width*sizeof(double));
+    un = (double(*)[width])(&un[1][1]);
 
     double h = 1.0/NX;
     double dt = 0.1*h*h;
