@@ -61,7 +61,6 @@ int main(int argc, char** argv){
         MPI_Sendrecv(&u[-1][0], width-2, MPI_DOUBLE, south, 0,
                      &u[0][0] , width-2, MPI_DOUBLE, south, 0,
                      MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-        }
     } // end loop(k)
 
     /* print */
