@@ -54,13 +54,21 @@ int main(int argc, char** argv){
         /* sendrecv */
         int north = irank<nrank-1 ? irank+1 : MPI_PROC_NULL;
         int south = irank>0 ? irank-1 : MPI_PROC_NULL;
-
+        /*
         MPI_Sendrecv(&u[height-2][0], width-2, MPI_DOUBLE, north, 0,
                      &u[height-3][0], width-2, MPI_DOUBLE, north, 0,
                      MPI_COMM_WORLD, MPI_STATUS_IGNORE);
         MPI_Sendrecv(&u[-1][0], width-2, MPI_DOUBLE, south, 0,
                      &u[0][0] , width-2, MPI_DOUBLE, south, 0,
                      MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+        */
+        MPI_Sendrecv(&u[height-2][0], width-2, MPI_DOUBLE, north, 0,
+                     &u[0][0] , width-2, MPI_DOUBLE, south, 0,
+                     MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+        MPI_Sendrecv(&u[-1][0], width-2, MPI_DOUBLE, south, 0,
+                     &u[height-3][0], width-2, MPI_DOUBLE, north, 0,
+                     MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+        
     } // end loop(k)
 
     /* print */
