@@ -1,3 +1,4 @@
+/* written by Hibino */
 #include<stdio.h>
 
 #define NX 193
