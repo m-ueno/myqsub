@@ -67,7 +67,7 @@ int main(int argc, char** argv){
     MPI_Type_commit(&vedge);
     int north, south, east, west;
     /* loop start */
-    for (k=0; k<40000; k++){
+    for (k=0; k<400; k++){
         for (j=0; j<ny; j++){
             for (i=0; i<nx; i++)
                 un[j][i] = u[j][i] + ( -4*u[j][i] + u[j][i+1] + u[j][i-1] + u[j+1][i] + u[j-1][i] )*dth2;
@@ -86,11 +86,11 @@ int main(int argc, char** argv){
                      &u[ny][0], nx, MPI_DOUBLE, north, 0,
                      MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 
-        MPI_Sendrecv(&u[ny-1][nx-1], 1, vedge, east, 0,
-                     &u[ny-1][-1], 1, vedge, west, 0,
+        MPI_Sendrecv(&u[0][nx-1], 1, vedge, east, 0,
+                     &u[0][-1], 1, vedge, west, 0,
                      MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-        MPI_Sendrecv(&u[ny-1][0], 1, vedge, west, 0,
-                     &u[ny-1][nx], 1, vedge, east, 0,
+        MPI_Sendrecv(&u[0][0], 1, vedge, west, 0,
+                     &u[0][nx], 1, vedge, east, 0,
                      MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     } // end loop(k)
 
