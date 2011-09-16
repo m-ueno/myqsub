@@ -125,10 +125,13 @@ int main(int argc, char** argv){
 // MPI_Gather (&sendbuf,sendcnt,sendtype,&recvbuf, 
 //             recvcount,recvtype,root,comm)
    double recvbuf[ny][ny*dims[0]];
+   int root;
+   int coord[2] = {py,0};
+   MPI_Cart_rank(cart, coord, *root);
    MPI_Gather(u, nx*ny, MPI_DOUBLE,
-              recvbuf, nx*ny, MPI_DOUBLE, row);
+              recvbuf, nx*ny, MPI_DOUBLE, root, row);
 
-   MPI_File *udata;
+   FILE *udata;
 
    for(int pj=0; pj<dims[0]; pj++){
        if(px==0){
