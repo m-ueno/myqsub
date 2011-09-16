@@ -5,12 +5,13 @@
 #define NX 193
 #define NY 193
 #define LW 67
+#define MCW MPI_COMM_WORLD
 
 int main(int argc, char** argv){
     int irank, nrank;
     MPI_Init (&argc, &argv);
-    MPI_Comm_size (MPI_COMM_WORLD, &nrank);
-    MPI_Comm_rank (MPI_COMM_WORLD, &irank);
+    MPI_Comm_size (MCW, &nrank);
+    MPI_Comm_rank (MCW, &irank);
 
     int nx, ny;
     int px, py;
@@ -36,7 +37,7 @@ int main(int argc, char** argv){
     double dt = 0.1*h*h;
     double dth2 = dt/h/h;
 //    MPI_File udata;
-    File *udata;
+    FILE *udata;
     int i,j,k;
     int width = nx+2, height = ny+2;
 
