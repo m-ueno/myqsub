@@ -119,7 +119,7 @@ int main(int argc, char** argv){
 
     /* 西端にgatherしてprint */
    MPI_Comm row;
-   MPI_cart_coords(cart, irank, 2, c);
+   MPI_Cart_coords(cart, irank, 2, c);
    MPI_Comm_split(cart, py, px, &row);
 
 // MPI_Gather (&sendbuf,sendcnt,sendtype,&recvbuf, 
