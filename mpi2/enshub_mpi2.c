@@ -37,7 +37,7 @@ int main(int argc, char** argv){
     double dt = 0.1*h*h;
     double dth2 = dt/h/h;
     int i,j,k;
-    int width = nx+2, height = ny+2;
+    int height = ny+2, width = nx+2;
 
     double (*u)[width];
     u = (double(*)[width])malloc(height*width*sizeof(double));
@@ -93,29 +93,6 @@ int main(int argc, char** argv){
     } // end loop(k)
 
     /* PRINT */
-/*
-    MPI_File_open(cart, "u.data", MPI_MODE_WRONLY | MPI_MODE_CREATE,
-                  MPI_INFO_NULL, &udata);
-    MPI_File_set_size(udata,0);
-
-    MPI_Datatype ftype;
-    int size[2] = {NY+1,LW*(NX+1)+1}, subsize[2], start[2];
-
-    MPI_Dims_create(nrank, 2, dims);
-    MPI_Cart_coords(cart, irank, 2, c);
-    subsize[0]=ny; subsize[1]=LW*nx;
-    start[0]=c[0]*ny+1; start[1]=LW*(c[1]*nx+1);
-    if ( c[0]==0 ){ subsize[0]++; start[0]=0; } // 
-    if ( c[0]==dims[0]-1 ) subsize[0]++; //西端
-    if ( c[1]==0 ){ subsize[1]+=LW; start[1]=0; }
-    if ( c[1]==dims[1]-1 ) subsize[1]+=LW+1;
-
-    MPI_Type_create_subarray(2, size, subsize, start,
-                             MPI_ORDER_C, MPI_CHAR, &ftype);
-    MPI_Type_commit(&ftype);
-    MPI_File_set_view(udata,0,MPI_CHAR,ftype,"native",
-                      MPI_INFO_NULL);
-*/
 
     /* 西端にgatherしてprint */
    MPI_Comm row;
@@ -124,23 +101,24 @@ int main(int argc, char** argv){
 
 // MPI_Gather (&sendbuf,sendcnt,sendtype,&recvbuf, 
 //             recvcount,recvtype,root,comm)
-   double recvbuf[ny][ny*dims[0]];
+//   double recvbuf[ny+2][(nx+2)*dims[1]];
+   double recvbuf[(ny+2)*dims[0]][(nx+2)];
    int root;
-   int coord[2] = {py,0};
+   int coord[2] = {py, 0};
    MPI_Cart_rank(cart, coord, &root);
-   printf("rank %d, coord: %d %d, c:%d %d, root: %d\n", irank, coord[1], coord[0], c[1], c[0], root);
-   MPI_Gather(u, nx*ny, MPI_DOUBLE,
-              recvbuf, nx*ny, MPI_DOUBLE, root, row);
+   printf("rank: %d, coord: %d %d, c:%d %d, root: %d\n", irank, coord[1], coord[0], c[1], c[0], root);
+   MPI_Gather(&u[-1][-1], (nx+2)*(ny+2), MPI_DOUBLE,
+              recvbuf, (nx+2)*(ny+2), MPI_DOUBLE, 0, row);
 
    FILE *udata;
 
    for(int pj=0; pj<dims[0]; pj++){
        if(px==0){
            udata = fopen("u.data","w");
-           for(j=0; j<ny; j+=4){
+           for(j=1; j<ny+1; j+=4){
                for(int pi=0; pi<dims[1]; pi++)
-                   for(i=0; i<nx; i+=4)
-                       fprintf( udata, "%.15E %.15E %.15E\n", (i+1 + nx*pi)*h, (j+1 + ny*pj)*h, u[j + pi*ny][i] );
+                   for(i=1; i<nx+1; i+=4)
+                       fprintf( udata, "%.15E %.15E %.15E\n", (i + nx*pi)*h, (j + ny*pj)*h, u[j + pi*ny][i] );
                fprintf( udata, "\n" );
            }
            fclose(udata);
