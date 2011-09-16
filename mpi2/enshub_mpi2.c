@@ -128,7 +128,7 @@ int main(int argc, char** argv){
    int root;
    int coord[2] = {py,0};
    MPI_Cart_rank(cart, coord, &root);
-   printf("rank %d, coord: %d %d, root: %d\n", irank, coord[0], coord[1], root);
+   printf("rank %d, coord: %d %d, c:%d %d, root: %d\n", irank, coord[1], coord[0], c[1], c[0], root);
    MPI_Gather(u, nx*ny, MPI_DOUBLE,
               recvbuf, nx*ny, MPI_DOUBLE, root, row);
 
