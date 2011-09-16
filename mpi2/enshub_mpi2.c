@@ -127,7 +127,7 @@ int main(int argc, char** argv){
    double recvbuf[ny][ny*dims[0]];
    int root;
    int coord[2] = {py,0};
-   MPI_Cart_rank(cart, coord, *root);
+   MPI_Cart_rank(cart, *coord, *root);
    MPI_Gather(u, nx*ny, MPI_DOUBLE,
               recvbuf, nx*ny, MPI_DOUBLE, root, row);
 
