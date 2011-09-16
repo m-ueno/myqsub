@@ -36,8 +36,6 @@ int main(int argc, char** argv){
     double h = 1.0/NX;
     double dt = 0.1*h*h;
     double dth2 = dt/h/h;
-//    MPI_File udata;
-    FILE *udata;
     int i,j,k;
     int width = nx+2, height = ny+2;
 
@@ -67,7 +65,7 @@ int main(int argc, char** argv){
     MPI_Type_commit(&vedge);
     int north, south, east, west;
     /* loop start */
-    for (k=0; k<40000; k++){
+    for (k=0; k<400; k++){
         for (j=0; j<ny; j++){
             for (i=0; i<nx; i++)
                 un[j][i] = u[j][i] + ( -4*u[j][i] + u[j][i+1] + u[j][i-1] + u[j+1][i] + u[j-1][i] )*dth2;
@@ -118,16 +116,33 @@ int main(int argc, char** argv){
     MPI_File_set_view(udata,0,MPI_CHAR,ftype,"native",
                       MPI_INFO_NULL);
 */
-    if (irank == 0){
-        udata = fopen("u.data","w");
-        /* output: rank0 */
-        for(j=-1;j<ny;j+=4){
-            for(i=-1;i<nx;i+=4)
-                fprintf( udata, "%.15E %.15E %.15E\n", (i+1)*h, (j+1)*h, u[j][i] );
-            fprintf( udata, "\n" );
-        }
-        fclose(udata);
-    }
+
+    /* 西端にgatherしてprint */
+   MPI_Comm row;
+   MPI_cart_coords(cart, irank, 2, c);
+   MPI_Comm_split(cart, py, px, &row);
+
+// MPI_Gather (&sendbuf,sendcnt,sendtype,&recvbuf, 
+//             recvcount,recvtype,root,comm)
+   double recvbuf[ny][ny*dims[0]];
+   MPI_Gather(u, nx*ny, MPI_DOUBLE,
+              recvbuf, nx*ny, MPI_DOUBLE, row);
+
+   MPI_File *udata;
+
+   for(int pj=0; pj<dims[0]; pj++){
+       if(px==0){
+           udata = fopen("u.data","w");
+           for(j=0; j<ny; j+=4){
+               for(int pi=0; pi<dims[1]; pi++)
+                   for(i=0; i<nx; i+=4)
+                       fprintf( udata, "%.15E %.15E %.15E\n", (i+1 + nx*pi)*h, (j+1 + ny*pj)*h, u[j + pi*ny][i] );
+               fprintf( udata, "\n" );
+           }
+           fclose(udata);
+       }
+       MPI_Barrier(MCW);
+   }
 
 //    MPI_File_close(&udata);
     MPI_Finalize ();
