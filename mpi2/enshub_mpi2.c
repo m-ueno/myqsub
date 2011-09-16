@@ -67,7 +67,7 @@ int main(int argc, char** argv){
     MPI_Type_commit(&vedge);
     int north, south, east, west;
     /* loop start */
-    for (k=0; k<400; k++){
+    for (k=0; k<40000; k++){
         for (j=0; j<ny; j++){
             for (i=0; i<nx; i++)
                 un[j][i] = u[j][i] + ( -4*u[j][i] + u[j][i+1] + u[j][i-1] + u[j+1][i] + u[j-1][i] )*dth2;
@@ -121,8 +121,8 @@ int main(int argc, char** argv){
     if (irank == 0){
         udata = fopen("u.data","w");
         /* output: rank0 */
-        for(j=0;j<ny;j+=4){
-            for(i=0;i<nx;i+=4)
+        for(j=-1;j<ny;j+=4){
+            for(i=-1;i<nx;i+=4)
                 fprintf( udata, "%.15E %.15E %.15E\n", (i+1)*h, (j+1)*h, u[j][i] );
             fprintf( udata, "\n" );
         }
