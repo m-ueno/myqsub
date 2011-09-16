@@ -104,7 +104,7 @@ int main(int argc, char** argv){
 //   double recvbuf[ny+2][(nx+2)*dims[1]];
    double recvbuf[(ny+2)*dims[0]][(nx+2)];
    int coord[2] = {py, 0};
-   printf("rank: %d, coord: %d %d, c:%d %d, root: %d\n", irank, coord[1], coord[0], c[1], c[0], root);
+   printf("rank: %d, coord: %d %d, c:%d %d\n", irank, coord[1], coord[0], c[1], c[0]);
    MPI_Gather(&u[-1][-1], (nx+2)*(ny+2), MPI_DOUBLE,
               recvbuf, (nx+2)*(ny+2), MPI_DOUBLE, 0, row);
 
