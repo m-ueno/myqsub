@@ -121,8 +121,8 @@ int main(int argc, char** argv){
     if (irank == 0){
         udata = fopen("u.data","w");
         /* output: rank0 */
-        for(j=-1;j<height-2;j+=4){
-            for(i=-1;i<NX;i+=4)
+        for(j=0;j<ny;j+=4){
+            for(i=0;i<nx;i+=4)
                 fprintf( udata, "%.15E %.15E %.15E\n", (i+1)*h, (j+1)*h, u[j][i] );
             fprintf( udata, "\n" );
         }
