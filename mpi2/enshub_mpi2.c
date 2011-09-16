@@ -103,9 +103,7 @@ int main(int argc, char** argv){
 //             recvcount,recvtype,root,comm)
 //   double recvbuf[ny+2][(nx+2)*dims[1]];
    double recvbuf[(ny+2)*dims[0]][(nx+2)];
-   int root;
    int coord[2] = {py, 0};
-   MPI_Cart_rank(cart, coord, &root);
    printf("rank: %d, coord: %d %d, c:%d %d, root: %d\n", irank, coord[1], coord[0], c[1], c[0], root);
    MPI_Gather(&u[-1][-1], (nx+2)*(ny+2), MPI_DOUBLE,
               recvbuf, (nx+2)*(ny+2), MPI_DOUBLE, 0, row);
