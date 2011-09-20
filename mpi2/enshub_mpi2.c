@@ -133,7 +133,7 @@ int main(int argc, char** argv){
         } //end if px==0
         MPI_Barrier(MCW);
     }
-    MPI_File_close(udata);
+    MPI_File_close(&udata);
     MPI_Finalize ();
 
     return 0;
