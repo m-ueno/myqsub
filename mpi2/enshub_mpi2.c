@@ -105,23 +105,23 @@ int main(int argc, char** argv){
     double recvbuf[ny+2][(nx+2)*dims[1]];
 
 //    printf("rank: %d, c: %d %d\n", irank, c[1], c[0]);
-    for(int pj=0;pj<dims[0];pj++){
-        for(j=-1;j<ny+1;j++){
+    for(int pj=0; pj<dims[0]; pj++){
+        for(j=-1; j<ny+1; j++){
             MPI_Gather(&u[j][0], nx, MPI_DOUBLE,
                        &recvbuf[j+1][1], nx, MPI_DOUBLE, 0, row);
         }
     }
-
+    /* ----------------こっから怪しい---------------- */
     MPI_File udata;
-    MPI_File_open(cart,"u.data", MPI_MODE_WRONLY | MPI_MODE_CREATE,
+    MPI_File_open(cart, "u.data", MPI_MODE_WRONLY | MPI_MODE_CREATE,
                   MPI_INFO_NULL, &udata);
     MPI_File_set_size(udata,0);
 
     int size[2] = {NY+1, LW*(NX+1)+1}, subsize[2], start[2];
-    if (c[0]==0){ subsize[0]++; start[0]=0; }
-    if (c[0]==dims[0]-1) subsize[0]++;
-    if (c[1]==0){ subsize[1]+=LW; start[1]=0; }
-    if (c[1]==dims[1]-1) subsize[1]+=LW+1;
+    if (py == 0){ subsize[0]++; start[0]=0; }   /* 南端↓ */
+    if (py == dims[0]-1) subsize[0]++;          /* 北端↑ */
+    if (px == 0){ subsize[1]+=LW; start[1]=0; } /* 西端← */
+    if (px == dims[1]-1) subsize[1]+=LW+1;      /* 東端→ */
 
     MPI_Datatype ftype;
     MPI_Type_create_subarray(2, size, subsize, start,
