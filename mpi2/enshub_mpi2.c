@@ -134,7 +134,7 @@ int main(int argc, char** argv){
             }
         } //end if px==0
     }
-    MPI_Barrier(MCW);
+/*    MPI_Barrier(MCW);
     if (1 == py){
         pj=1;
         if (px==0) {
@@ -147,7 +147,7 @@ int main(int argc, char** argv){
             }
         } //end if px==0
     }
-
+*/
 
 /*    for(int pj=0; pj<dims[0]; pj++){
         if (py == pj){
