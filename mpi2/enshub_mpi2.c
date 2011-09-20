@@ -123,6 +123,7 @@ int main(int argc, char** argv){
     if (c[1]==0){ subsize[1]+=LW; start[1]=0; }
     if (c[1]==dims[1]-1) subsize[1]+=LW+1;
 
+    MPI_Datatype ftype;
     MPI_Type_create_subarray(2, size, subsize, start,
                              MPI_ORDER_C, MPI_CHAR, &ftype);
     MPI_Type_commit(&ftype);
@@ -130,7 +131,7 @@ int main(int argc, char** argv){
                       MPI_INFO_NULL);
 
     MPI_Status st;
-    char wbuf = (char*)malloc((LW*(nx+2)+2)*sizeof(char));
+    char* wbuf = (char*)malloc((LW*(nx+2)+2)*sizeof(char));
     printf("rank %d, py: %d, dims0: %d\n", irank, py, dims[0]);
 
     int pj;
