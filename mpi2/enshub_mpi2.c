@@ -121,7 +121,7 @@ int main(int argc, char** argv){
     char wbuf[LW];
     MPI_Status st;
     for(int pj=0; pj<dims[0]; pj++){
-        if(px==0 && c[0]==pj){
+        if(px==0 && py==pj){
             for(j=1; j<ny+1; j++){
                 for(i=1; i<nx*dims[1]+1; i++){
                     sprintf( wbuf, " %.15E %.15E %.15E\n", (i+1)*h, (j+1 + pj*ny)*h, recvbuf[j][i] );
