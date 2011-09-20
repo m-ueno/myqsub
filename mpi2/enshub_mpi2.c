@@ -121,7 +121,35 @@ int main(int argc, char** argv){
     char wbuf[LW];
     MPI_Status st;
     printf("rank %d, py: %d, dims0: %d\n", irank, py, dims[0]);
-    for(int pj=0; pj<dims[0]; pj++){
+    int pj;
+    if (0 == py){
+        pj=0;
+        if (px==0) {
+            for(j=1; j<ny+1; j++){
+                for(i=1; i<nx*dims[1]+1; i++){
+                    sprintf( wbuf, " %.15E %.15E %.15E\n", (i+1)*h, (j+1 + pj*ny)*h, recvbuf[j][i] );
+                    MPI_File_write(udata,wbuf,LW,MPI_CHAR,&st);
+                }
+                MPI_File_write(udata,"\n",1,MPI_CHAR,&st);
+            }
+        } //end if px==0
+    }
+    MPI_Barrier(MCW);
+    if (1 == py){
+        pj=1;
+        if (px==0) {
+            for(j=1; j<ny+1; j++){
+                for(i=1; i<nx*dims[1]+1; i++){
+                    sprintf( wbuf, " %.15E %.15E %.15E\n", (i+1)*h, (j+1 + pj*ny)*h, recvbuf[j][i] );
+                    MPI_File_write(udata,wbuf,LW,MPI_CHAR,&st);
+                }
+                MPI_File_write(udata,"\n",1,MPI_CHAR,&st);
+            }
+        } //end if px==0
+    }
+
+
+/*    for(int pj=0; pj<dims[0]; pj++){
         if (py == pj){
             
         if (px==0) {
@@ -136,6 +164,7 @@ int main(int argc, char** argv){
         }
         MPI_Barrier(MCW);
     }
+*/
     MPI_File_close(&udata);
     MPI_Finalize ();
 
