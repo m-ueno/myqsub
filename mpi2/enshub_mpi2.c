@@ -122,6 +122,8 @@ int main(int argc, char** argv){
     MPI_Status st;
     printf("rank %d, py: %d, dims0: %d\n", irank, py, dims[0]);
     for(int pj=0; pj<dims[0]; pj++){
+        if (py == pj){
+            
         if (px==0) {
             for(j=1; j<ny+1; j++){
                 for(i=1; i<nx*dims[1]+1; i++){
@@ -131,6 +133,7 @@ int main(int argc, char** argv){
                 MPI_File_write(udata,"\n",1,MPI_CHAR,&st);
             }
         } //end if px==0
+        }
         MPI_Barrier(MCW);
     }
     MPI_File_close(&udata);
