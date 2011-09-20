@@ -67,7 +67,7 @@ int main(int argc, char** argv){
     MPI_Cart_shift(cart,0,1,&south,&north);
     MPI_Cart_shift(cart,1,1,&west,&east);
     /* loop start */
-    for (k=0; k<400; k++){
+    for (k=0; k<4; k++){
         for (j=0; j<ny; j++){
             for (i=0; i<nx; i++)
                 un[j][i] = u[j][i] + ( -4*u[j][i] + u[j][i+1] + u[j][i-1] + u[j+1][i] + u[j-1][i] )*dth2;
@@ -120,7 +120,7 @@ int main(int argc, char** argv){
 
     char wbuf[LW];
     MPI_Status st;
-    printf("rank %d, py: %d\n", irank, py);
+    printf("rank %d, py: %d, dims0: %d\n", irank, py, dims[0]);
     for(int pj=0; pj<dims[0]; pj++){
         if (px==0) {
             for(j=1; j<ny+1; j++){
