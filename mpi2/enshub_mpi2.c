@@ -121,10 +121,9 @@ int main(int argc, char** argv){
     char wbuf[LW];
     MPI_Status st;
     for(int pj=0; pj<dims[0]; pj++){
-        if(px==0){
+        if(px==0 && c[0]==pj){
             for(j=1; j<ny+1; j++){
                 for(i=1; i<nx*dims[1]+1; i++){
-//                    fprintf( udata, "%.15E %.15E %.15E\n", (i+1)*h, (j+1)*h, recvbuf[j][i] );
                     sprintf( wbuf, " %.15E %.15E %.15E\n", (i+1)*h, (j+1 + pj*ny)*h, recvbuf[j][i] );
                     MPI_File_write(udata,wbuf,LW,MPI_CHAR,&st);
                 }
