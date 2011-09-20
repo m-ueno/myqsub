@@ -109,11 +109,13 @@ int main(int argc, char** argv){
     FILE *udata;
         /* output: rank0 */
     if(irank==0){
+        udata = fopen("u.data","w");
         for(j=-1;j<ny+1;j+=4){
             for(i=-1;i<nx+1;i+=4)
                 fprintf( udata, "%.15E %.15E %.15E\n", (i+1)*h, (j+1)*h, u[j][i] );
             fprintf( udata, "\n" );
         }
+        fclose(udata);
     }
     
 /*
