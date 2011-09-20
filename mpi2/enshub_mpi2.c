@@ -128,7 +128,7 @@ int main(int argc, char** argv){
                     sprintf( wbuf, " %.15E %.15E %.15E\n", (i+1)*h, (j+1)*h, recvbuf[j][i] );
                     MPI_File_write(udata,wbuf,LW,MPI_CHAR,&st);
                 }
-                MPI_File_write(udata,"¥n",1,MPI_CHAR,&st);
+                MPI_File_write(udata,"\n",1,MPI_CHAR,&st);
             }
         } //end if px==0
         MPI_Barrier(MCW);
