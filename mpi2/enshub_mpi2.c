@@ -125,7 +125,7 @@ int main(int argc, char** argv){
             for(j=1; j<ny+1; j++){
                 for(i=1; i<nx*dims[1]+1; i++){
 //                    fprintf( udata, "%.15E %.15E %.15E\n", (i+1)*h, (j+1)*h, recvbuf[j][i] );
-                    sprintf( wbuf, " %.15E %.15E %.15E\n", (i+1)*h, (j+1)*h, recvbuf[j][i] );
+                    sprintf( wbuf, " %.15E %.15E %.15E\n", (i+1)*h, (j+1 + pj*ny)*h, recvbuf[j][i] );
                     MPI_File_write(udata,wbuf,LW,MPI_CHAR,&st);
                 }
                 MPI_File_write(udata,"\n",1,MPI_CHAR,&st);
