@@ -107,20 +107,30 @@ int main(int argc, char** argv){
                recvbuf, (nx+2)*(ny+2), MPI_DOUBLE, 0, row);
 
     FILE *udata;
+        /* output: rank0 */
+    if(irank==0){
+        for(j=-1;j<ny+1;j+=4){
+            for(i=-1;i<nx+1;i+=4)
+                fprintf( udata, "%.15E %.15E %.15E\n", (i+1)*h, (j+1)*h, u[j][i] );
+            fprintf( udata, "\n" );
+        }
+    }
+    
+/*
     for(int pj=0; pj<dims[0]; pj++){
         if(px==0){
             udata = fopen("u.data","w");
             for(j=0; j<ny; j+=4){
                 for(int pi=0; pi<dims[1]; pi++)
                     for(i=0; i<nx; i+=4)
-                        fprintf( udata, "%.15E %.15E %.15E\n", (i + nx*pi)*h, (j + ny*pj)*h, u[j + pi*ny][i] );
+                        fprintf( udata, "%.15E %.15E %.15E\n", (i+1 + nx*pi)*h, (j+1 + ny*pj)*h, u[j + pi*ny][i] );
                 fprintf( udata, "\n" );
             }
             fclose(udata);
-        }
+        } //end if px==0
         MPI_Barrier(MCW);
     }
-
+*/
 //    MPI_File_close(&udata);
     MPI_Finalize ();
 
