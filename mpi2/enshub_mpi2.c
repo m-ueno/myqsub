@@ -113,24 +113,38 @@ int main(int argc, char** argv){
     }
 
     MPI_File udata;
-    MPI_File_open(cart,"u.data",
-                  MPI_MODE_WRONLY|MPI_MODE_CREATE,
+    MPI_File_open(cart,"u.data", MPI_MODE_WRONLY | MPI_MODE_CREATE,
                   MPI_INFO_NULL, &udata);
     MPI_File_set_size(udata,0);
 
-    char wbuf[LW];
+    int size[2] = {NY+1, LW*(NX+1)+1}, subsize[2], start[2];
+    if (c[0]==0){ subsize[0]++; start[0]=0; }
+    if (c[0]==dims[0]-1) subsize[0]++;
+    if (c[1]==0){ subsize[1]+=LW; start[1]=0; }
+    if (c[1]==dims[1]-1) subsize[1]+=LW+1;
+
+    MPI_Type_create_subarray(2, size, subsize, start,
+                             MPI_ORDER_C, MPI_CHAR, &ftype);
+    MPI_Type_commit(&ftype);
+    MPI_File_set_view(udata, 0, MPI_CHAR, ftype, "native",
+                      MPI_INFO_NULL);
+
     MPI_Status st;
+    char wbuf = (char*)malloc((LW*(nx+2)+2)*sizeof(char));
     printf("rank %d, py: %d, dims0: %d\n", irank, py, dims[0]);
+
     int pj;
     if (0 == py){
         pj=0;
         if (px==0) {
-            for(j=1; j<ny+1; j++){
+            for (j=1,k=0; j<ny+1; j++,k+=LW) {
                 for(i=1; i<nx*dims[1]+1; i++){
-                    sprintf( wbuf, " %.15E %.15E %.15E\n", (i+1)*h, (j+1 + pj*ny)*h, recvbuf[j][i] );
-                    MPI_File_write(udata,wbuf,LW,MPI_CHAR,&st);
+                    sprintf( wbuf+k, " %.15E %.15E %.15E\n",
+                             (i+1)*h, (j+1 + pj*ny)*h, recvbuf[j][i] );
                 }
-                MPI_File_write(udata,"\n",1,MPI_CHAR,&st);
+                if ( px == dims[1]-1 ) //東端
+                    sprintf( wbuf+(k++), "\n");
+                MPI_File_write(udata,wbuf,k,MPI_CHAR,&st);
             }
         } //end if px==0
     }
