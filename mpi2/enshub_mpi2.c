@@ -103,39 +103,38 @@ int main(int argc, char** argv){
 //             recvcount,recvtype,root,comm)
 //    double recvbuf[(ny+2)*dims[0]][(nx+2)];
     double recvbuf[ny+2][(nx+2)*dims[1]];
-    recvbuf = &recvbuf[1][1];
 
 //    printf("rank: %d, c: %d %d\n", irank, c[1], c[0]);
     for(int pj=0;pj<dims[0];pj++){
         for(j=-1;j<ny+1;j++){
             MPI_Gather(&u[j][0], nx, MPI_DOUBLE,
-                       &recvbuf[j][0], nx, MPI_DOUBLE, 0, row);
+                       &recvbuf[j+1][1], nx, MPI_DOUBLE, 0, row);
         }
     }
 
-    MPI_File *udata;
+    MPI_File udata;
     MPI_File_open(cart,"u.data",
                   MPI_MODE_WRONLY|MPI_MODE_CREATE,
                   MPI_INFO_NULL, udata);
-    MPI_File_set_size(udata,0);
+    MPI_File_set_size(&udata,0);
 
 
     char wbuf[LW];
     MPI_Status st;
     for(int pj=0; pj<dims[0]; pj++){
         if(px==0){
-            for(j=0; j<ny; j++){
-                for(i=0; i<nx*dims[1]; i++){
+            for(j=1; j<ny+1; j++){
+                for(i=1; i<nx*dims[1]+1; i++){
 //                    fprintf( udata, "%.15E %.15E %.15E\n", (i+1)*h, (j+1)*h, recvbuf[j][i] );
                     sprintf( wbuf, " %.15E %.15E %.15E\n", (i+1)*h, (j+1)*h, recvbuf[j][i] );
-                    MPI_File_write(udata,wbuf,LW,MPI_CHAR,&st);
+                    MPI_File_write(&udata,wbuf,LW,MPI_CHAR,&st);
                 }
-                MPI_File_write(udata,"¥n",1,MPI_CHAR,&st);
+                MPI_File_write(&udata,"¥n",1,MPI_CHAR,&st);
             }
         } //end if px==0
         MPI_Barrier(MCW);
     }
-    MPI_File_close(udata);
+    MPI_File_close(&udata);
     MPI_Finalize ();
 
     return 0;
