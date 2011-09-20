@@ -108,7 +108,7 @@ int main(int argc, char** argv){
 
     FILE *udata;
         /* output: rank0 */
-    if(irank==0){
+    if(irank==1){
         udata = fopen("u.data","w");
         for(j=-1;j<ny+1;j+=4){
             for(i=-1;i<nx+1;i+=4)
