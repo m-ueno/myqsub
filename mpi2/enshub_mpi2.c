@@ -115,9 +115,8 @@ int main(int argc, char** argv){
     MPI_File udata;
     MPI_File_open(cart,"u.data",
                   MPI_MODE_WRONLY|MPI_MODE_CREATE,
-                  MPI_INFO_NULL, udata);
-    MPI_File_set_size(&udata,0);
-
+                  MPI_INFO_NULL, &udata);
+    MPI_File_set_size(udata,0);
 
     char wbuf[LW];
     MPI_Status st;
@@ -127,14 +126,14 @@ int main(int argc, char** argv){
                 for(i=1; i<nx*dims[1]+1; i++){
 //                    fprintf( udata, "%.15E %.15E %.15E\n", (i+1)*h, (j+1)*h, recvbuf[j][i] );
                     sprintf( wbuf, " %.15E %.15E %.15E\n", (i+1)*h, (j+1)*h, recvbuf[j][i] );
-                    MPI_File_write(&udata,wbuf,LW,MPI_CHAR,&st);
+                    MPI_File_write(udata,wbuf,LW,MPI_CHAR,&st);
                 }
-                MPI_File_write(&udata,"¥n",1,MPI_CHAR,&st);
+                MPI_File_write(udata,"¥n",1,MPI_CHAR,&st);
             }
         } //end if px==0
         MPI_Barrier(MCW);
     }
-    MPI_File_close(&udata);
+    MPI_File_close(udata);
     MPI_Finalize ();
 
     return 0;
