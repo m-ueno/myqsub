@@ -103,13 +103,13 @@ int main(int argc, char** argv){
 //             recvcount,recvtype,root,comm)
 //    double recvbuf[(ny+2)*dims[0]][(nx+2)];
     double recvbuf[ny+2][(nx+2)*dims[1]];
-    recvbuf = (double(*)[ny+2])(&recvbuf[1][1]);
+    recvbuf = &recvbuf[1][1];
 
 //    printf("rank: %d, c: %d %d\n", irank, c[1], c[0]);
     for(int pj=0;pj<dims[0];pj++){
         for(j=-1;j<ny+1;j++){
             MPI_Gather(&u[j][0], nx, MPI_DOUBLE,
-                       recvbuf[j][0], nx, MPI_DOUBLE, 0, row);
+                       &recvbuf[j][0], nx, MPI_DOUBLE, 0, row);
         }
     }
 
@@ -120,7 +120,7 @@ int main(int argc, char** argv){
     MPI_File_set_size(udata,0);
 
 
-    char[100] wbuf;
+    char wbuf[LW];
     MPI_Status st;
     for(int pj=0; pj<dims[0]; pj++){
         if(px==0){
