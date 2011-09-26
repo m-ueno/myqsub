@@ -66,6 +66,7 @@ int main(int argc, char** argv){
     int north, south, east, west;
     MPI_Cart_shift(cart,0,1,&south,&north);
     MPI_Cart_shift(cart,1,1,&west,&east);
+
     /* loop start */
     for (k=0; k<4; k++){
         for (j=0; j<ny; j++){
@@ -93,31 +94,24 @@ int main(int argc, char** argv){
     } // end loop(k)
 
     /* PRINT */
-
-    /* 西端にgatherしてprint */
-    MPI_Comm row;
-    MPI_Cart_coords(cart, irank, 2, c);
-    MPI_Comm_split(cart, py, px, &row);
-
-// MPI_Gather (&sendbuf,sendcnt,sendtype,&recvbuf, 
-//             recvcount,recvtype,root,comm)
-//    double recvbuf[(ny+2)*dims[0]][(nx+2)];
-    double recvbuf[ny+2][(nx+2)*dims[1]];
-
+    /* コピペ */
+    
 //    printf("rank: %d, c: %d %d\n", irank, c[1], c[0]);
-    for(int pj=0; pj<dims[0]; pj++){
-        for(j=-1; j<ny+1; j++){
-            MPI_Gather(&u[j][0], nx, MPI_DOUBLE,
-                       &recvbuf[j+1][1], nx, MPI_DOUBLE, 0, row);
-        }
-    }
-    /* ----------------こっから怪しい---------------- */
     MPI_File udata;
     MPI_File_open(cart, "u.data", MPI_MODE_WRONLY | MPI_MODE_CREATE,
                   MPI_INFO_NULL, &udata);
     MPI_File_set_size(udata,0);
 
     int size[2] = {NY+1, LW*(NX+1)+1}, subsize[2], start[2];
+// ...
+    MPI_Dims_create(nrank, 2, dims);
+    MPI_Cart_coords(cart, me, 2, c);
+// ...
+    subsize[0] = ny;
+    subsize[1] = LW*nx;
+    start[0] = py*ny+1;         /* py==0 => 1 */
+    start[1] = LW*(px*nx+1);    /* px==0 => LW */
+
     if (py == 0){ subsize[0]++; start[0]=0; }   /* 南端↓ */
     if (py == dims[0]-1) subsize[0]++;          /* 北端↑ */
     if (px == 0){ subsize[1]+=LW; start[1]=0; } /* 西端← */
@@ -130,10 +124,21 @@ int main(int argc, char** argv){
     MPI_File_set_view(udata, 0, MPI_CHAR, ftype, "native",
                       MPI_INFO_NULL);
 
+    /* ここから??? */
     MPI_Status st;
-    char* wbuf = (char*)malloc((LW*(nx+2)+2)*sizeof(char));
-    printf("rank %d, py: %d, dims0: %d\n", irank, py, dims[0]);
+    char *wbuf = (char*)malloc((LW*(nx+2)+2)*sizeof(char));
 
+    for(i=start[1]; i<start[1]+subsize[1]; i++){ // ??
+        for(j=start[0],k=0; j<start[0]+subsize[0]; j++,k+=LW)
+            sprintf( wbuf+k, " %.15E %.15E %.15E\n",
+                     (i+1)*h, (j+1 + pj*ny)*h, u[j][i] );
+    
+        if(c[1]==dims[1]-1)     /* 東端→ */
+            sprintf(wbuf+(k++),"\n");
+        MPI_File_write(udata,wbuf,k,MPI_CHAR,&st);
+    }
+
+/*
     int pj;
     if (0 == py){
         pj=0;
@@ -149,37 +154,8 @@ int main(int argc, char** argv){
             }
         } //end if px==0
     }
-/*    MPI_Barrier(MCW);
-    if (1 == py){
-        pj=1;
-        if (px==0) {
-            for(j=1; j<ny+1; j++){
-                for(i=1; i<nx*dims[1]+1; i++){
-                    sprintf( wbuf, " %.15E %.15E %.15E\n", (i+1)*h, (j+1 + pj*ny)*h, recvbuf[j][i] );
-                    MPI_File_write(udata,wbuf,LW,MPI_CHAR,&st);
-                }
-                MPI_File_write(udata,"\n",1,MPI_CHAR,&st);
-            }
-        } //end if px==0
-    }
 */
 
-/*    for(int pj=0; pj<dims[0]; pj++){
-        if (py == pj){
-            
-        if (px==0) {
-            for(j=1; j<ny+1; j++){
-                for(i=1; i<nx*dims[1]+1; i++){
-                    sprintf( wbuf, " %.15E %.15E %.15E\n", (i+1)*h, (j+1 + pj*ny)*h, recvbuf[j][i] );
-                    MPI_File_write(udata,wbuf,LW,MPI_CHAR,&st);
-                }
-                MPI_File_write(udata,"\n",1,MPI_CHAR,&st);
-            }
-        } //end if px==0
-        }
-        MPI_Barrier(MCW);
-    }
-*/
     MPI_File_close(&udata);
     MPI_Finalize ();
 
