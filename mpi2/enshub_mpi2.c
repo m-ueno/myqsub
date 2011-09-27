@@ -130,7 +130,7 @@ int main(int argc, char** argv){
 
     printf("%d: checkpoint5\n",irank);
 
-    MPI_Barrier(cart);
+    MPI_Barrier(MCW);
 
     /* ここから??? */
     MPI_Status st;
