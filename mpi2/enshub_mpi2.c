@@ -48,17 +48,23 @@ int main(int argc, char** argv){
     un = (double(*)[width])(&un[1][1]);
 
     for (j=-1;j<ny+1;j++)
-        for (i=-1;i<nx+1;i++)
+        for (i=-1;i<nx+1;i++){
             u[j][i] = 0.0;
+            un[j][i] = 0.0;
+        }
     // (y=0)
     if (py==0)
-        for (i=-1;i<nx+1;i++)
+        for (i=-1;i<nx+1;i++){
             u[-1][i] = 1.0;
+            un[-1][i] = 1.0;
+        }
 
     // (x=0)
     if (px==0)
-        for (j=0;j<ny+1;j++)
+        for (j=0;j<ny+1;j++){
             u[j][-1] = 0.5;
+            un[j][-1] = 0.5;
+        }
 
     MPI_Datatype vedge;
     MPI_Type_vector(ny, 1, nx+2, MPI_DOUBLE, &vedge);
