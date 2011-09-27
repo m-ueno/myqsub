@@ -97,7 +97,7 @@ int main(int argc, char** argv){
 
     /* PRINT */
     /* コピペ */
-    fprintf(stderr, "%d: checkpoint1\n", irank);
+//    fprintf(stderr, "%d: checkpoint1\n", irank);
     
 //    printf("rank: %d, c: %d %d\n", irank, c[1], c[0]);
     MPI_File udata;
@@ -121,16 +121,16 @@ int main(int argc, char** argv){
     if (px == dims[1]-1) subsize[1]+=LW+1;      /* 東端→ */
 
     MPI_Datatype ftype;
-    fprintf(stderr, "%d: checkpoint2\n", irank);
+//    fprintf(stderr, "%d: checkpoint2\n", irank);
     MPI_Type_create_subarray(2, size, subsize, start,
                              MPI_ORDER_C, MPI_CHAR, &ftype);
-    fprintf(stderr, "%d: checkpoint3\n", irank);
+//    fprintf(stderr, "%d: checkpoint3\n", irank);
     MPI_Type_commit(&ftype);
     MPI_File_set_view(udata, 0, MPI_CHAR, ftype, "native",
                       MPI_INFO_NULL);
 
     fprintf(stderr, "%d: checkpoint4\n", irank);
-    MPI_Barrier(MCW);
+    MPI_Barrier(MCW);           /* 余計 */
 
     /* ここから??? */
     MPI_Status st;
