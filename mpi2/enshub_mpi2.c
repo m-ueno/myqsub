@@ -124,6 +124,8 @@ int main(int argc, char** argv){
     MPI_File_set_view(udata, 0, MPI_CHAR, ftype, "native",
                       MPI_INFO_NULL);
 
+    printf("%d: checkpoint1\n",irank);
+
     /* ここから??? */
     MPI_Status st;
     char *wbuf = (char*)malloc((LW*(nx+2)+2)*sizeof(char));
