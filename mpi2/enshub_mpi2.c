@@ -112,12 +112,12 @@ int main(int argc, char** argv){
 // ... py,pxはcartesian座標
     subsize[0] = ny;
     subsize[1] = LW*nx;
-    start[0] = py*ny+1;         /* py==0 => 1 */
+    start[0] = py*ny;         /* py==0 => 1 */
     start[1] = LW*(px*nx+1);    /* px==0 => LW */
 
-    if (py == 0){ subsize[0]++; start[0]=0; }   /* 南端↓ */
+    if (py == 0){ subsize[0]++; start[0]=-1; }   /* 南端↓ */
     if (py == dims[0]-1) subsize[0]++;          /* 北端↑ */
-    if (px == 0){ subsize[1]+=LW; start[1]=0; } /* 西端← */
+    if (px == 0){ subsize[1]+=LW; start[1]=-1; } /* 西端← */
     if (px == dims[1]-1) subsize[1]+=LW+1;      /* 東端→ */
 
     MPI_Datatype ftype;
