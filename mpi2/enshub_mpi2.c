@@ -137,7 +137,7 @@ int main(int argc, char** argv){
     
 
     for(j=jstart; j<jend; j++){
-        for(i=istart; i<iend; i++){
+        for(i=istart,k=0; i<iend; i++,k+=LW){
             sprintf( wbuf+k, " %.15E %.15E %.15E\n",
                      (i+1)*h, (j+1 + dims[0]*ny)*h, u[j][i] );
         }
