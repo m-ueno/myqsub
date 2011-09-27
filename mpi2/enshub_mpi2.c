@@ -76,7 +76,7 @@ int main(int argc, char** argv){
     fprintf(stderr, "%d: checkpoint0\n", irank);
 
     /* loop start */
-    for (k=0; k<40000; k++){
+    for (k=0; k<4; k++){
         for (j=0; j<ny; j++){
             for (i=0; i<nx; i++)
                 un[j][i] = u[j][i] + ( -4*u[j][i] + u[j][i+1] + u[j][i-1] + u[j+1][i] + u[j-1][i] )*dth2;
