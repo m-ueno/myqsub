@@ -39,6 +39,25 @@ int main(int argc, char** argv){
     int i,j,k;
     int height = ny+2, width = nx+2;
 
+    switch( irank ){
+    case 0:
+        fprintf(stderr, "\x1b[31m");     /* 前景色を赤に */
+        break;
+    case 1:
+        fprintf(stderr, "\x1b[32m");     /* 前景色を緑に */
+        break;
+    case 2:
+        fprintf(stderr, "\x1b[33m");     /* 前景色を黄色に */
+        break;
+    case 3:
+        fprintf(stderr, "\x1b[34m");     /* 前景色を青に */
+        break;
+    default:
+        fprintf(stderr, "\x1b[39m");     /* 前景色をデフォルトに戻す */
+    }
+
+
+
     double (*u)[width];
     u = (double(*)[width])malloc(height*width*sizeof(double));
     u = (double(*)[width])(&u[1][1]);
