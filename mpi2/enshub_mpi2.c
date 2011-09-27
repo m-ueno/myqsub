@@ -130,18 +130,21 @@ int main(int argc, char** argv){
                       MPI_INFO_NULL);
 
     fprintf(stderr, "%d: checkpoint4\n", irank);
-    MPI_Barrier(MCW);
+    MPI_Barrier(MCW);           /* 余計 */
 
     /* ここから??? */
     MPI_Status st;
     char *wbuf = (char*)malloc((LW*(nx+2)+2)*sizeof(char));
 
-    for(i=start[1]; i<start[1]+subsize[1]; i++){ // ??
-        for(j=start[0],k=0; j<start[0]+subsize[0]; j++,k+=LW)
+    int jstart=0,istart=0, jend=ny, iend=nx;
+    
+
+    for(j=jstart; j<jend; j++){
+        for(i=istart; i<iend; i++){
             sprintf( wbuf+k, " %.15E %.15E %.15E\n",
                      (i+1)*h, (j+1 + dims[0]*ny)*h, u[j][i] );
-
-        if(c[1]==dims[1]-1)     /* 東端→ */
+        }
+        if(c[1]==dims[1]-1)     // 東端→
             sprintf(wbuf+(k++),"\n");
         MPI_File_write(udata,wbuf,k,MPI_CHAR,&st);
     }
