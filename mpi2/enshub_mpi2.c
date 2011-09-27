@@ -134,7 +134,8 @@ int main(int argc, char** argv){
     char *wbuf = (char*)malloc((LW*(nx+2)+2)*sizeof(char));
 
     int jstart=0,istart=0, jend=ny, iend=nx;
-    
+    if(py==0) jstart = -1;
+    if(py==dims[0]-1) jend = ny+1;
 
     for(j=jstart; j<jend; j++){
         for(i=istart,k=0; i<iend; i++,k+=LW){
