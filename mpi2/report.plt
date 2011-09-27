@@ -1,4 +1,4 @@
-set term postscript eps enhanced
+set term postscript eps enhanced color
 set output "fig.eps"
 set xlabel "x"
 set ylabel "y"
