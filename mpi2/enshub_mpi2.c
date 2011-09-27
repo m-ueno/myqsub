@@ -105,7 +105,7 @@ int main(int argc, char** argv){
     int size[2] = {NY+1, LW*(NX+1)+1}, subsize[2], start[2];
 // ...
     MPI_Dims_create(nrank, 2, dims);
-    MPI_Cart_coords(cart, me, 2, c);
+    MPI_Cart_coords(cart, irank, 2, c);
 // ...
     subsize[0] = ny;
     subsize[1] = LW*nx;
@@ -131,8 +131,8 @@ int main(int argc, char** argv){
     for(i=start[1]; i<start[1]+subsize[1]; i++){ // ??
         for(j=start[0],k=0; j<start[0]+subsize[0]; j++,k+=LW)
             sprintf( wbuf+k, " %.15E %.15E %.15E\n",
-                     (i+1)*h, (j+1 + pj*ny)*h, u[j][i] );
-    
+                     (i+1)*h, (j+1 + dims[0]*ny)*h, u[j][i] );
+
         if(c[1]==dims[1]-1)     /* 東端→ */
             sprintf(wbuf+(k++),"\n");
         MPI_File_write(udata,wbuf,k,MPI_CHAR,&st);
