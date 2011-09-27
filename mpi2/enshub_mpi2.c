@@ -129,6 +129,7 @@ int main(int argc, char** argv){
     MPI_File_set_view(udata, 0, MPI_CHAR, ftype, "native",
                       MPI_INFO_NULL);
 
+    fprintf(stderr, "\x1b[31m");     /* 前景色を赤に */
     fprintf(stderr, "%d: checkpoint4\n", irank);
     MPI_Barrier(MCW);
 
