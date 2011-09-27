@@ -127,7 +127,6 @@ int main(int argc, char** argv){
                       MPI_INFO_NULL);
 
     fprintf(stderr, "%d: checkpoint4\n", irank);
-    MPI_Barrier(MCW);           /* 余計 */
 
     /* ここから??? */
     MPI_Status st;
@@ -136,6 +135,8 @@ int main(int argc, char** argv){
     int jstart=0,istart=0, jend=ny, iend=nx;
     if(py==0) jstart = -1;
     if(py==dims[0]-1) jend = ny+1;
+    if(px==0) istart = -1;
+    if(px==dims[1]-1) iend = nx+1;
 
     for(j=jstart; j<jend; j++){
         for(i=istart,k=0; i<iend; i++,k+=LW){
