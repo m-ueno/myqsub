@@ -67,6 +67,8 @@ int main(int argc, char** argv){
     MPI_Cart_shift(cart,0,1,&south,&north);
     MPI_Cart_shift(cart,1,1,&west,&east);
 
+    printf("%d: checkpoint0\n",irank);
+
     /* loop start */
     for (k=0; k<4; k++){
         for (j=0; j<ny; j++){
