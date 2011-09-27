@@ -140,9 +140,9 @@ int main(int argc, char** argv){
     for(j=jstart; j<jend; j++){
         for(i=istart,k=0; i<iend; i++,k+=LW){
             sprintf( wbuf+k, " %.15E %.15E %.15E\n",
-                     (i+1)*h, (j+1 + dims[0]*ny)*h, u[j][i] );
+                     (i+1)*h, (j+1 + py*ny)*h, u[j][i] );
         }
-        if(c[1]==dims[1]-1)     // 東端→
+        if( px == dims[1]-1 )     // 東端→
             sprintf(wbuf+(k++),"\n");
         MPI_File_write(udata,wbuf,k,MPI_CHAR,&st);
     }
