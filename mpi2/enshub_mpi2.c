@@ -73,8 +73,6 @@ int main(int argc, char** argv){
     MPI_Cart_shift(cart,0,1,&south,&north);
     MPI_Cart_shift(cart,1,1,&west,&east);
 
-    fprintf(stderr, "%d: checkpoint0\n", irank);
-
     /* loop start */
     for (k=0; k<40000; k++){
         for (j=0; j<ny; j++){
@@ -101,11 +99,7 @@ int main(int argc, char** argv){
                      MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     } // end loop(k)
 
-    /* PRINT */
-    /* コピペ */
-    fprintf(stderr, "%d: checkpoint1\n", irank);
-    
-//    printf("rank: %d, c: %d %d\n", irank, c[1], c[0]);
+    /* setview */
     MPI_File udata;
     MPI_File_open(cart, "u.data", MPI_MODE_WRONLY | MPI_MODE_CREATE,
                   MPI_INFO_NULL, &udata);
@@ -115,8 +109,8 @@ int main(int argc, char** argv){
 // ... py,pxはcartesian座標
     subsize[0] = ny;
     subsize[1] = LW*nx;
-    start[0] = py*ny+1;         /* py==0 => 1 */
-    start[1] = LW*(px*nx+1);    /* px==0 => LW */
+    start[0] = py*ny+1;
+    start[1] = LW*(px*nx+1);
 
     if (py == 0){ subsize[0]++; start[0]=0; }   /* 南端↓ */
     if (py == dims[0]-1) subsize[0]++;          /* 北端↑ */
@@ -124,17 +118,13 @@ int main(int argc, char** argv){
     if (px == dims[1]-1) subsize[1]+=LW+1;      /* 東端→ */
 
     MPI_Datatype ftype;
-    fprintf(stderr, "%d: checkpoint2\n", irank);
     MPI_Type_create_subarray(2, size, subsize, start,
                              MPI_ORDER_C, MPI_CHAR, &ftype);
-//    fprintf(stderr, "%d: checkpoint3\n", irank);
     MPI_Type_commit(&ftype);
     MPI_File_set_view(udata, 0, MPI_CHAR, ftype, "native",
                       MPI_INFO_NULL);
 
-    fprintf(stderr, "%d: checkpoint4\n", irank);
-
-    /* ここから??? */
+    /* output */
     MPI_Status st;
     char *wbuf = (char*)malloc((LW*(nx+2)+2)*sizeof(char));
 
@@ -153,24 +143,6 @@ int main(int argc, char** argv){
             sprintf(wbuf+(k++),"\n");
         MPI_File_write(udata,wbuf,k,MPI_CHAR,&st);
     }
-
-/*
-    int pj;
-    if (0 == py){
-        pj=0;
-        if (px==0) {
-            for (j=1,k=0; j<ny+1; j++,k+=LW) {
-                for(i=1; i<nx*dims[1]+1; i++){
-                    sprintf( wbuf+k, " %.15E %.15E %.15E\n",
-                             (i+1)*h, (j+1 + pj*ny)*h, recvbuf[j][i] );
-                }
-                if ( px == dims[1]-1 ) //東端
-                    sprintf( wbuf+(k++), "\n");
-                MPI_File_write(udata,wbuf,k,MPI_CHAR,&st);
-            }
-        } //end if px==0
-    }
-*/
 
     MPI_File_close(&udata);
     MPI_Finalize ();
