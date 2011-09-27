@@ -28,7 +28,7 @@ int main(int argc, char** argv){
     MPI_Comm cart;
     MPI_Cart_create(MCW, 2, dims, periods, 0, &cart);
 
-    int c[2];
+    int c[2];                   /* 座標 */
     MPI_Cart_coords(cart, irank, 2, c);
     py = c[0]; // c[2]は大きい順なのでyがc[0]
     px = c[1];
@@ -95,6 +95,7 @@ int main(int argc, char** argv){
 
     /* PRINT */
     /* コピペ */
+    printf("%d: checkpoint1\n",irank);
     
 //    printf("rank: %d, c: %d %d\n", irank, c[1], c[0]);
     MPI_File udata;
@@ -106,11 +107,12 @@ int main(int argc, char** argv){
 // ...
     MPI_Dims_create(nrank, 2, dims);
     MPI_Cart_coords(cart, irank, 2, c);
-// ...
+// ... py,pxはcartesian座標
     subsize[0] = ny;
     subsize[1] = LW*nx;
     start[0] = py*ny+1;         /* py==0 => 1 */
     start[1] = LW*(px*nx+1);    /* px==0 => LW */
+    printf("%d: checkpoint2\n",irank);
 
     if (py == 0){ subsize[0]++; start[0]=0; }   /* 南端↓ */
     if (py == dims[0]-1) subsize[0]++;          /* 北端↑ */
@@ -118,13 +120,15 @@ int main(int argc, char** argv){
     if (px == dims[1]-1) subsize[1]+=LW+1;      /* 東端→ */
 
     MPI_Datatype ftype;
+    printf("%d: checkpoint3\n",irank);
     MPI_Type_create_subarray(2, size, subsize, start,
                              MPI_ORDER_C, MPI_CHAR, &ftype);
+    printf("%d: checkpoint4\n",irank);
     MPI_Type_commit(&ftype);
     MPI_File_set_view(udata, 0, MPI_CHAR, ftype, "native",
                       MPI_INFO_NULL);
 
-    printf("%d: checkpoint1\n",irank);
+    printf("%d: checkpoint5\n",irank);
 
     /* ここから??? */
     MPI_Status st;
