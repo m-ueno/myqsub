@@ -130,6 +130,8 @@ int main(int argc, char** argv){
 
     printf("%d: checkpoint5\n",irank);
 
+    MPI_Barrier(cart);
+
     /* ここから??? */
     MPI_Status st;
     char *wbuf = (char*)malloc((LW*(nx+2)+2)*sizeof(char));
