@@ -14,6 +14,7 @@ int main(int argc, char *argv[]){
     FILE *udata;
     int i,j,k;
     int irank, nrank;
+    int nx,ny,north,south;
 
     double t1,t2;
     t1 = omp_get_wtime();
@@ -22,9 +23,9 @@ int main(int argc, char *argv[]){
     {
         nrank = omp_get_num_threads(); /* 4 */
         irank = omp_get_thread_num();  /* [0,3] */
-        int nx = (NX-1)/nrank;         /* 48 = 192/4 */
-        int ny = (NY-1)/nrank;         /* 48 */
-        int north=0,south=0;
+        nx = (NX-1)/nrank;         /* 48 = 192/4 */
+        ny = (NY-1)/nrank;         /* 48 */
+        north=0,south=0;
         if(irank==0) south=-1;   /* 南端-1 */
         if(irank==nrank-1) north=1; /* 北端+1 */
 
