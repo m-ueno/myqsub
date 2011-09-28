@@ -18,7 +18,7 @@ int main(int argc, char *argv[]){
     double t1,t2;
     t1 = omp_get_wtime();
 
-#pragma omp parallel default(none) shared(u,un) firstprivate(h,dt,dth2)
+#pragma omp parallel default(private) shared(u,un) firstprivate(h,dt,dth2)
     {
         nrank = omp_get_num_threads(); /* 4 */
         irank = omp_get_thread_num();  /* [0,3] */
