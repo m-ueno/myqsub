@@ -1,3 +1,4 @@
+/* MPI 1次元領域分割 */
 #include<stdio.h>
 #include<stdlib.h>
 #include<mpi.h>
@@ -11,6 +12,9 @@ int main(int argc, char** argv){
     MPI_Init (&argc, &argv);
     MPI_Comm_size (MPI_COMM_WORLD, &nrank);
     MPI_Comm_rank (MPI_COMM_WORLD, &irank);
+
+    double t1,t2;
+    if(irank==0) t1 = MPI_Wtime();
 
     int height=(NY-1)/nrank+2, width=NX+1;
     
@@ -92,6 +96,11 @@ int main(int argc, char** argv){
         MPI_Send (&u[0][-1], width*(height-2), MPI_DOUBLE, 0, 0, MPI_COMM_WORLD );
     } else {
         MPI_Send (&u[0][-1], width*(height-1), MPI_DOUBLE, 0, 0, MPI_COMM_WORLD );
+    }
+
+    if (irank==0) {
+        t2 = MPI_Wtime();
+        printf("\ntime: %g\n",t2-t1);
     }
 
     MPI_Finalize ();
