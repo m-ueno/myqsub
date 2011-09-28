@@ -18,7 +18,7 @@ int main(int argc, char *argv[]){
     double t1,t2;
     t1 = omp_get_wtime();
 
-#pragma omp parallel private (k)
+#pragma omp parallel default(none) shared(u,un) firstprivate(h,dt,dth2)
     {
         nrank = omp_get_num_threads(); /* 4 */
         irank = omp_get_thread_num();  /* [0,3] */
@@ -27,8 +27,6 @@ int main(int argc, char *argv[]){
         int north=0,south=0;
         if(irank==0) south=-1;   /* 南端-1 */
         if(irank==nrank-1) north=1; /* 北端+1 */
-
-        printf("i:%d, south:%d, north:%d\n", irank, south, north);
 
         for(j=irank*ny+1+south; j<(irank+1)*ny+1+north; j++){
             for(i=0; i<NX+1; i++){
