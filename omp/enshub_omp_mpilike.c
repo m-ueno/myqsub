@@ -30,7 +30,7 @@ int main(int argc, char *argv[]){
 
         printf("i:%d, south:%d, north:%d\n", irank, south, north);
 
-        for(j=irank*ny+1+south; j<(irank+1)*ny+north; j++){
+        for(j=irank*ny+1+south; j<(irank+1)*ny+1+north; j++){
             for(i=0; i<NX+1; i++){
                 if (i==0)
                     u[j][i] = 0.5;
