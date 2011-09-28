@@ -16,23 +16,21 @@ int main(int argc, char *argv[]){
     double t1,t2;
     t1 = omp_get_wtime();
 
-    for(j=0;j<=NY;j++){
-        for(i=0;i<=NX;i++){
-            if (i==0) {
-                u[j][i] = 0.5;
-                un[j][i] = 0.5;
-            } else if(j==0) {
-                u[j][i] = 1.0;
-                un[j][i] = 1.0;
-            } else {
-                u[j][i] = 0.0;
-                un[j][i] = 0.0;
-            }
-        }
-    }
-
 #pragma omp parallel private (k)
     {
+#pragma omp for private (i)
+        for(j=0;j<=NY;j++){
+            for(i=0;i<=NX;i++){
+                if (i==0) {
+                    u[j][i] = 0.5;
+                } else if(j==0) {
+                    u[j][i] = 1.0;
+                } else {
+                    u[j][i] = 0.0;
+                }
+            }
+        }
+
         for(k=0;k<40000;k++){       // 40000 times loop
 #pragma omp for private (i)
             for(j=1;j<NY;j++){

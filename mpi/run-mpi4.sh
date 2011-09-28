@@ -12,3 +12,11 @@ cd $QSUB_WORKDIR
 NUM_PROCS=4
 mpiexec -n $NUM_PROCS a.out
 mpiexec -n $NUM_PROCS a.out
+mpiexec -n $NUM_PROCS a.out
+mpiexec -n $NUM_PROCS a.out
+mpiexec -n $NUM_PROCS a.out
+mpiexec -n $NUM_PROCS a.out
+mpiexec -n $NUM_PROCS a.out
+mpiexec -n $NUM_PROCS a.out
+mpiexec -n $NUM_PROCS a.out
+mpiexec -n $NUM_PROCS a.out
