@@ -1,10 +1,21 @@
 /* written by Hibino */
 #include<stdio.h>
+#include<time.h>
+#include<sys/time.h>
+#include<sys/resource.h>
 
 #define NX 193
 #define NY 193
 #define ND ((NX+1)*(NY+1))
 #define NXNY (NX*NY)
+
+double getrusage_sec(){
+    struct rusage t;
+    struct timeval tv;
+    getrusage(RUSAGE_SELF, &t);
+    tv = t.ru_utime;
+    return tv.tv_sec + (double)tv.tv_usec*1e-6;
+}
 
 int main(int argc, char *argv[]){
     double u[NY+1][NX+1], un[NY+1][NX+1];
@@ -13,6 +24,9 @@ int main(int argc, char *argv[]){
     double dth2 = dt/(h*h);
     FILE *udata;
     int i,j,k;
+    double t1,t2;
+
+    t1 = getrusage_sec();
 
     for(j=0;j<=NY;j++){         //配列の初期化
         for(i=0;i<=NX;i++){
@@ -47,6 +61,9 @@ int main(int argc, char *argv[]){
         fprintf(udata,"\n");
     }
     fclose(udata);
+
+    t2 = getrusage_sec();
+    printf("time: %f\n", t2-t1);
 
     return 0;
 }
