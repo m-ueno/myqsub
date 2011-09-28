@@ -8,14 +8,13 @@
 #define MCW MPI_COMM_WORLD
 
 int main(int argc, char** argv){
-    MPI_Init (&argc, &argv);
-    double t1,t2;
-    if(irank==0) t1 = MPI_Wtime();
-
     int irank, nrank;
-
+    MPI_Init (&argc, &argv);
     MPI_Comm_size (MCW, &nrank);
     MPI_Comm_rank (MCW, &irank);
+
+    double t1,t2;
+    if(irank==0) t1 = MPI_Wtime();
 
     int nx, ny;
     int px, py;
