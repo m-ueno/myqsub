@@ -16,7 +16,7 @@ int main(int argc, char** argv){
     int nx, ny;
     int px, py;
 
-    static double t1,t2;
+    double t1,t2;
     if(irank==0) t1 = MPI_Wtime();
 
 
