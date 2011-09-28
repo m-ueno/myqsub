@@ -16,6 +16,10 @@ int main(int argc, char** argv){
     int nx, ny;
     int px, py;
 
+    static double t1,t2;
+    if(irank==0) t1 = MPI_Wtime();
+
+
     /* コピペゾーン */
     // (1) init dims
     int dims[2] = {0,0};
@@ -145,6 +149,12 @@ int main(int argc, char** argv){
     }
 
     MPI_File_close(&udata);
+
+    if(irank==0){
+        t2 = MPI_Wtime();
+        printf("\ntime: %g\n",t2-t1);
+    }
+
     MPI_Finalize ();
 
     return 0;

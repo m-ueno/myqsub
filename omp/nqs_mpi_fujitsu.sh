@@ -16,15 +16,9 @@
 # @$-lm 1800mb
 # @$-cp 0:10:00
 set -x
+OMP_NUM_THREADS=16
+export OMP_NUM_THREADS
 
-#----------- 環境変数の指定 ------------
-#   (必要があればコメントアウトして使う)
-#
-# スタックサイズの情報を取得(Fat SMPクラスタのFortranのみ有効)
-# FLIB_USE_STACK_INFO=1;export FLIB_USE_STACK_INFO
-
-#---------- プログラムの実行 ----------
-# ジョブを投入したディレクトリに移動
 cd $QSUB_WORKDIR
-time ./a.out
+./a.out
 
