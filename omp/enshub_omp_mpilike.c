@@ -45,7 +45,6 @@ int main(int argc, char *argv[]){
             for(j=irank*ny+1; j<(irank+1)*ny+1; j++) /* 手動で分割 */
                 for(i=1;i<NX;i++)
                     un[j][i] = u[j][i] + ( -4*u[j][i] + u[j][i+1] + u[j][i-1] + u[j+1][i] + u[j-1][i] )*dth2;
-#pragma omp_barrier
             for(j=irank*ny+1; j<(irank+1)*ny+1; j++)
                 for(i=1;i<NX;i++)
                     u[j][i] = un[j][i];
