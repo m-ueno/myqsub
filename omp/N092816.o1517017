@@ -1,12 +1,12 @@
 Queue name:  sh20100
-Exit code :  0
-Start/End :  Wed Sep 28 14:56:23 JST 2011 / Wed Sep 28 14:56:27 JST 2011
-Elapse    :  00:00:04
+Exit code :  126
+Start/End :  Wed Sep 28 16:18:02 JST 2011 / Wed Sep 28 16:18:03 JST 2011
+Elapse    :  00:00:01
 
 Reason
   Request exited normally.
 
-  _Exit() value was 0.
+  _Exit() value was 126.
 
 
 Allocated Resource
@@ -17,19 +17,15 @@ Allocated Resource
   After Free Memory
     Total Large Page Memory       :         0 Mbyte 
     Total Normal Page Memory      :  1887436800 Byte
-  CPUs                            :        16 CPU 
+  CPUs                            :         4 CPU 
   Execmode                        :         CHIP_SHare
   Elapse time limit               :       600.000 sec
 
 Used Resource
-  Total System CPU Time           :      3624 msec 
-  Total User CPU Time             :     50596 msec 
+  Total System CPU Time           :        12 msec 
+  Total User CPU Time             :         9 msec 
   Total Large Page Memory         :         0 Mbyte 
-  Total Normal Page Memory        :   3268608 Byte
-  CPUs                            :        16 CPU 
+  Total Normal Page Memory        :   1785856 Byte
+  CPUs                            :         3 CPU 
 
-+ OMP_NUM_THREADS=16
-+ export OMP_NUM_THREADS
-+ cd /home/a/a0064164/work/EnshuB/omp
-+ ./a.out
-t2-t1: 3.388588
+/var/spool/FJSVpnple/nqs/1517017-1317194282383/1517017.0: /var/spool/FJSVpnple/nqs/1517017-1317194282383/1517017.0: cannot execute binary file
