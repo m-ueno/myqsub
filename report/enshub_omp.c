@@ -1,6 +1,6 @@
-#include<stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
-#include<omp.h>
+#include <omp.h>
 
 #define NX 193
 #define NY 193
@@ -13,18 +13,21 @@ int main(int argc, char *argv[]){
     FILE *udata;
     int i,j,k;
 
+    double t1,t2;
+    t1 = omp_get_wtime();
+
 #pragma omp parallel private (k)
     {
 #pragma omp for private (i)
-        for(j=0;j<=NY;j++){         //配列の初期化
+        for(j=0;j<=NY;j++){
             for(i=0;i<=NX;i++){
-                if(i==0){
+                if (i==0) {
                     u[j][i] = 0.5;
                     un[j][i] = 0.5;
-                }else if(j==0){
+                } else if(j==0) {
                     u[j][i] = 1.0;
                     un[j][i] = 1.0;
-                }else{
+                } else {
                     u[j][i] = 0.0;
                     un[j][i] = 0.0;
                 }
@@ -49,7 +52,6 @@ int main(int argc, char *argv[]){
 
     if( (udata = fopen("u.data","w")) == NULL ){
         printf("Can't open file.\n");
-        //              return 1;
     }
     for(j=0;j<=NY;j++){//ファイル出力
         for(i=0;i<=NX;i++){
@@ -58,6 +60,9 @@ int main(int argc, char *argv[]){
         fprintf(udata,"\n");
     }
     fclose(udata);
+
+    t2 = omp_get_wtime();
+    printf("t2-t1: %f\n", t2-t1);
 
     return 0;
 
