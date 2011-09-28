@@ -18,15 +18,15 @@ double getrusage_sec(){
 }
 
 int main(int argc, char *argv[]){
+    double t1,t2;
+    t1 = getrusage_sec();
+
     double u[NY+1][NX+1], un[NY+1][NX+1];
     double h = 1.0/193;
     double dt = 0.1*h*h;
     double dth2 = dt/(h*h);
     FILE *udata;
     int i,j,k;
-    double t1,t2;
-
-    t1 = getrusage_sec();
 
     for(j=0;j<=NY;j++){         //配列の初期化
         for(i=0;i<=NX;i++){
