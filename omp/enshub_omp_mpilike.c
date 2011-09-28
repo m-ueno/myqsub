@@ -28,6 +28,8 @@ int main(int argc, char *argv[]){
         if(irank==0) south=-1;   /* 南端-1 */
         if(irank==nrank-1) north=1; /* 北端+1 */
 
+        printf("i:%d, south:%d, north:%d\n", irank, south, north);
+
         for(j=irank*ny+1+south; j<(irank+1)*ny+north; j++){
             for(i=0; i<NX+1; i++){
                 if (i==0)
