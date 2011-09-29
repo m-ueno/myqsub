@@ -13,7 +13,7 @@ for i in ${NUM_PROCS[@]}; do
     echo $i procs
     count=10
     while [ $count -gt 0 ]; do
-        mpiexec -n $i ./a.out
+        mpiexec -band 16 -n $i ./a.out
         count=`expr $count - 1`
     done
 done
