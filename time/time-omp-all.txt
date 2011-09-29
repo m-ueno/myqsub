@@ -1,0 +1,105 @@
+Queue name:  sh20100
+Exit code :  1
+Start/End :  Thu Sep 29 17:51:27 JST 2011 / Thu Sep 29 17:54:16 JST 2011
+Elapse    :  00:02:49
+
+Reason
+  Request exited normally.
+
+  _Exit() value was 1.
+
+
+Allocated Resource
+  Virtual Nodes                   :         1 Node 
+  Before Free Memory
+    Total Large Page Memory       :         0 Mbyte 
+    Total Normal Page Memory      :  1887436800 Byte
+  After Free Memory
+    Total Large Page Memory       :         0 Mbyte 
+    Total Normal Page Memory      :  1887436800 Byte
+  CPUs                            :        16 CPU 
+  Execmode                        :         CHIP_SHare
+  Elapse time limit               :       600.000 sec
+
+Used Resource
+  Total System CPU Time           :     72467 msec 
+  Total User CPU Time             :    575921 msec 
+  Total Large Page Memory         :         0 Mbyte 
+  Total Normal Page Memory        :   3293184 Byte
+  CPUs                            :        16 CPU 
+
+enshub_omp
+1 threads
+t2-t1: 7.541451
+t2-t1: 7.607962
+t2-t1: 7.736196
+2 threads
+t2-t1: 4.352675
+t2-t1: 4.344450
+t2-t1: 4.372015
+4 threads
+t2-t1: 2.443418
+t2-t1: 2.447911
+t2-t1: 2.441512
+8 threads
+t2-t1: 1.829804
+t2-t1: 1.823978
+t2-t1: 1.868207
+12 threads
+t2-t1: 1.507090
+t2-t1: 1.483585
+t2-t1: 1.501705
+16 threads
+t2-t1: 1.518844
+t2-t1: 1.506477
+t2-t1: 1.577826
+enshub_omp_with_first_touch
+1 threads
+t2-t1: 8.453949
+t2-t1: 8.340348
+t2-t1: 8.422142
+2 threads
+t2-t1: 4.783926
+t2-t1: 4.778027
+t2-t1: 4.837364
+4 threads
+t2-t1: 2.595788
+t2-t1: 2.595840
+t2-t1: 2.587601
+8 threads
+t2-t1: 1.814695
+t2-t1: 1.829537
+t2-t1: 1.846706
+12 threads
+t2-t1: 1.465133
+t2-t1: 1.432330
+t2-t1: 1.426145
+16 threads
+t2-t1: 1.253104
+t2-t1: 1.319700
+t2-t1: 1.247507
+enshub_omp_mpilike
+1 threads
+t2-t1: 7.404226
+t2-t1: 7.531981
+t2-t1: 7.516102
+2 threads
+t2-t1: 4.141405
+t2-t1: 4.139034
+t2-t1: 4.133499
+4 threads
+t2-t1: 2.196556
+t2-t1: 2.187555
+t2-t1: 2.196858
+8 threads
+t2-t1: 1.045438
+t2-t1: 1.042025
+t2-t1: 1.040827
+12 threads
+t2-t1: 0.749516
+t2-t1: 0.743265
+t2-t1: 0.742573
+16 threads
+t2-t1: 0.653673
+t2-t1: 0.651231
+t2-t1: 0.651858
