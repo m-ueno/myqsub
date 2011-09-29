@@ -33,7 +33,8 @@ sub myqdel {
     my $num = shift;
     printf ("arg:%i, ids[num]:%s", $num, $ids[$num]);
     print "\nreally? ";
-    if (chomp(my $in =  <STDIN>) eq 'y' || 'Y' || "\n") {
+    chomp ( my $in =  <STDIN> );
+    if ( $in eq 'y' || 'Y' || "\n") {
         print "EXECUTE!\n";
         printf ("arg:%i, ids[num]:%s", $num, $ids[$num]);
         print `qdel -k $ids[$in]`;

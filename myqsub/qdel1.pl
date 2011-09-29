@@ -11,7 +11,7 @@ my @ids;
 
 sub get_ids {
     my @qs = split(/\n/,`qs`);
-    return if $qs[0] == /no jobs/;
+    return if $qs[0] =~ /no jobs/;
     for my $l (@qs) {
         push( @ids, $1 ) if $l =~/(\d+)\.nqs/;
     }
