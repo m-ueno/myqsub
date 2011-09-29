@@ -6,7 +6,9 @@
 # @$-lm 1800mb
 # @$-cp 0:10:00
 
-PROGS=("enshu_omp" "enshu_omp_with_firsttouch" "enshu_omp_mpilike")
+cd $QSUB_WORKDIR
+cat $QSUB_WORKDIR
+PROGS=("enshub_omp" "enshub_omp_with_first_touch" "enshub_omp_mpilike")
 NUM_THREADS=(1 2 4 8 12 16)
 for prog in ${PROGS[@]}; do
     echo $prog
