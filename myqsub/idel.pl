@@ -1,4 +1,4 @@
-#!/bin/env/perl
+#!/bin/env perl
 package Idel;
 use strict;
 use warnings;
