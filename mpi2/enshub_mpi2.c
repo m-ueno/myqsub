@@ -148,7 +148,7 @@ int main(int argc, char** argv){
 
     if(irank==0){
         t2 = MPI_Wtime();
-        printf("\ntime: %g\n",t2-t1);
+        printf("%g\n",t2-t1);
     }
 
     MPI_Finalize ();
