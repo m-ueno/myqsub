@@ -1,5 +1,5 @@
 #!/bin/env perl
-package User;
+package Qdel1;
 use strict;
 use warnings;
 use Data::Dumper;
@@ -19,7 +19,6 @@ sub get_ids {
 
 sub main {
     get_ids();
-    print Dumper [@ids];
     die if not @ids;
     my $i = pop(@ids);
     `qdel -k $i`;
