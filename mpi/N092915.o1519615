@@ -1,0 +1,131 @@
+Queue name:  gh10034
+Exit code :  1
+Start/End :  Thu Sep 29 15:36:26 JST 2011 / Thu Sep 29 15:38:32 JST 2011
+Elapse    :  00:02:05
+
+Reason
+  Request exited normally.
+
+  _Exit() value was 1.
+
+
+Allocated Resource
+  Virtual Nodes                   :        16 Node 
+  Before Free Memory
+    Total Large Page Memory       :         0 Mbyte 
+    Total Normal Page Memory      :  30198988800 Byte
+  After Free Memory
+    Total Large Page Memory       :         0 Mbyte 
+    Total Normal Page Memory      :  30198988800 Byte
+  CPUs                            :        16 CPU 
+  Execmode                        :         CHIP_SHare
+  Elapse time limit               :       600.000 sec
+
+Used Resource
+  Total System CPU Time           :     17294 msec 
+  Total User CPU Time             :    620395 msec 
+  Total Large Page Memory         :         0 Mbyte 
+  Total Normal Page Memory        :  276480000 Byte
+  CPUs                            :        16 CPU 
+
+/home/a/a0064164/work/EnshuB/mpi
+
+time: 4.37611
+
+time: 4.36248
+
+time: 4.36756
+
+time: 4.35735
+
+time: 4.38204
+
+time: 4.47538
+
+time: 4.36568
+
+time: 4.34694
+
+time: 4.36616
+
+time: 4.36296
+
+time: 2.51456
+
+time: 2.51024
+
+time: 2.50664
+
+time: 2.51942
+
+time: 2.50161
+
+time: 5.09782
+
+time: 2.51588
+
+time: 2.96803
+
+time: 2.5112
+
+time: 2.50373
+
+time: 1.63176
+
+time: 1.63183
+
+time: 1.63111
+
+time: 1.62909
+
+time: 1.62588
+
+time: 1.62936
+
+time: 1.62045
+
+time: 1.62974
+
+time: 1.63309
+
+time: 1.62129
+
+time: 1.12423
+
+time: 1.12101
+
+time: 1.1288
+
+time: 1.16169
+
+time: 1.12312
+
+time: 1.16436
+
+time: 1.20554
+
+time: 1.2361
+
+time: 1.19444
+
+time: 1.16413
+
+time: 0.951629
+
+time: 0.909387
+
+time: 0.948619
+
+time: 0.908137
+
+time: 0.909649
+
+time: 0.909067
+
+time: 0.94742
+
+time: 0.914624
+
+time: 0.91202
+
+time: 0.912247

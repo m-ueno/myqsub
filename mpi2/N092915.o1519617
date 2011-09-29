@@ -1,0 +1,156 @@
+Queue name:  gh10034
+Exit code :  1
+Start/End :  Thu Sep 29 15:38:36 JST 2011 / Thu Sep 29 15:43:00 JST 2011
+Elapse    :  00:04:23
+
+Reason
+  Request exited normally.
+
+  _Exit() value was 1.
+
+
+Allocated Resource
+  Virtual Nodes                   :        16 Node 
+  Before Free Memory
+    Total Large Page Memory       :         0 Mbyte 
+    Total Normal Page Memory      :  30198988800 Byte
+  After Free Memory
+    Total Large Page Memory       :         0 Mbyte 
+    Total Normal Page Memory      :  30198988800 Byte
+  CPUs                            :        16 CPU 
+  Execmode                        :         CHIP_SHare
+  Elapse time limit               :       600.000 sec
+
+Used Resource
+  Total System CPU Time           :     39217 msec 
+  Total User CPU Time             :    825345 msec 
+  Total Large Page Memory         :         0 Mbyte 
+  Total Normal Page Memory        :  325644288 Byte
+  CPUs                            :        16 CPU 
+
+1 procs
+
+time: 9.35917
+
+time: 9.1009
+
+time: 9.27373
+
+time: 9.2699
+
+time: 9.11608
+
+time: 9.09805
+
+time: 9.06718
+
+time: 9.15059
+
+time: 9.15669
+
+time: 9.08271
+2 procs
+
+time: 4.97837
+
+time: 4.97307
+
+time: 5.01637
+
+time: 5.00911
+
+time: 5.02585
+
+time: 4.97374
+
+time: 4.99501
+
+time: 5.15579
+
+time: 5.07873
+
+time: 4.93833
+4 procs
+
+time: 3.22866
+
+time: 3.16404
+
+time: 3.26256
+
+time: 3.17987
+
+time: 3.17266
+
+time: 3.15504
+
+time: 3.12302
+
+time: 3.14467
+
+time: 3.16146
+
+time: 3.13828
+8 procs
+
+time: 2.10836
+
+time: 2.10521
+
+time: 2.11105
+
+time: 2.27443
+
+time: 2.24262
+
+time: 2.31029
+
+time: 2.20801
+
+time: 2.26905
+
+time: 2.21649
+
+time: 13.3576
+12 procs
+
+time: 2.00987
+
+time: 2.05624
+
+time: 2.01678
+
+time: 1.99901
+
+time: 2.04324
+
+time: 2.12025
+
+time: 2.07069
+
+time: 2.04813
+
+time: 2.05678
+
+time: 2.01485
+16 procs
+
+time: 1.85207
+
+time: 1.84429
+
+time: 1.76161
+
+time: 1.8877
+
+time: 1.81817
+
+time: 1.88623
+
+time: 1.85269
+
+time: 1.76035
+
+time: 1.81707
+
+time: 1.89445
