@@ -9,12 +9,13 @@
 cd $QSUB_WORKDIR
 cat $QSUB_WORKDIR
 PROGS=("enshub_omp" "enshub_omp_with_first_touch" "enshub_omp_mpilike")
-NUM_THREADS=(2 4 8 12 16)
+NUM_THREADS=(1 2 4 8 12 16)
 for prog in ${PROGS[@]}; do
     echo $prog
     for i in ${NUM_THREADS[@]}; do
+       	echo $i threads
         export OMP_NUM_THREADS=i
-        count=10
+        count=3
         while [ $count -gt 0 ]; do
             ./$prog
             count=`expr $count - 1`
