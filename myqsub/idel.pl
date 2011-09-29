@@ -1,3 +1,4 @@
+#!/bin/env/perl
 package Idel;
 use strict;
 use warnings;
@@ -28,14 +29,13 @@ sub input {
     @ARGV = split(/\s/, $in);
 }
 
-
 sub myqdel {
     my $num = shift;
     printf ("arg:%i, ids[num]:%s", $num, $ids[$num]);
     print "\nreally? ";
-    if(chomp(my $in =  <STDIN>) eq 'y' || 'Y' || "\n"){
+    if (chomp(my $in =  <STDIN>) eq 'y' || 'Y' || "\n") {
         print "EXECUTE!\n";
-				printf ("arg:%i, ids[num]:%s", $num, $ids[$num]);
+        printf ("arg:%i, ids[num]:%s", $num, $ids[$num]);
         print `qdel -k $ids[$in]`;
     }
 }
@@ -43,7 +43,7 @@ sub myqdel {
 sub main {
     get_ids();
     input() if not $ARGV[0];
-    foreach my $i (@ARGV){
+    foreach my $i (@ARGV) {
         myqdel($i);
     }
 }
