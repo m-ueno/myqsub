@@ -2,8 +2,8 @@
 #include<stdlib.h>
 #include<mpi.h>
 
-#define NX 193
-#define NY 193
+#define NX 1987
+#define NY 1987
 #define LW 67
 #define MCW MPI_COMM_WORLD
 
@@ -74,7 +74,7 @@ int main(int argc, char** argv){
     MPI_Cart_shift(cart,1,1,&west,&east);
 
     /* loop start */
-    for (k=0; k<40000; k++){
+    for (k=0; k<2000; k++){
         for (j=0; j<ny; j++){
             for (i=0; i<nx; i++)
                 un[j][i] = u[j][i] + ( -4*u[j][i] + u[j][i+1] + u[j][i-1] + u[j+1][i] + u[j-1][i] )*dth2;

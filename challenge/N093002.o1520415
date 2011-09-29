@@ -1,0 +1,32 @@
+Queue name:  gh10034
+Exit code :  Killed by signal 9
+Start/End :  Fri Sep 30 02:51:34 JST 2011 / Fri Sep 30 02:52:01 JST 2011
+Elapse    :  00:00:27
+
+Reason
+  Request aborted via a signal.
+  Request deleted.
+
+  Killed by qdel command, signal was 9.
+
+
+Allocated Resource
+  Virtual Nodes                   :        64 Node 
+  Before Free Memory
+    Total Large Page Memory       :         0 Mbyte 
+    Total Normal Page Memory      :  120795955200 Byte
+  After Free Memory
+    Total Large Page Memory       :         0 Mbyte 
+    Total Normal Page Memory      :  120795955200 Byte
+  CPUs                            :        64 CPU 
+  Execmode                        :         CHIP_SHare
+  Elapse time limit               :       600.000 sec
+
+Used Resource
+  Total System CPU Time           :      8980 msec 
+  Total User CPU Time             :    220549 msec 
+  Total Large Page Memory         :         0 Mbyte 
+  Total Normal Page Memory        :  261373952 Byte
+  CPUs                            :        16 CPU 
+
+16 procs

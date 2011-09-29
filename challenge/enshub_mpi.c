@@ -3,8 +3,8 @@
 #include<stdlib.h>
 #include<mpi.h>
 
-#define NX 193
-#define NY 193
+#define NX 1987
+#define NY 1987
 
 int main(int argc, char** argv){
     int irank,nrank;
@@ -47,7 +47,7 @@ int main(int argc, char** argv){
     int north = irank<nrank-1 ? irank+1 : MPI_PROC_NULL; // upper
     int south = irank>0 ? irank-1 : MPI_PROC_NULL;       // lower
     /* loop start */
-    for(k=0;k<40000;k++){
+    for(k=0;k<2000;k++){
         for(j=0;j<height-2;j++)
             for(i=0;i<NX-1;i++)
                 un[j][i] = u[j][i] + ( -4*u[j][i] + u[j][i+1] + u[j][i-1] + u[j+1][i] + u[j-1][i] )*dth2;
@@ -104,7 +104,7 @@ int main(int argc, char** argv){
 
     if (irank==0) {
         t2 = MPI_Wtime();
-        printf("\ntime: %g\n",t2-t1);
+        printf("%g\n",t2-t1);
     }
 
     MPI_Finalize ();

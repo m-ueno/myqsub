@@ -8,7 +8,7 @@
 # @$-cp 0:10:00
 
 cd $QSUB_WORKDIR
-NUM_PROCS=(16 64)
+NUM_PROCS=(16 32 64)
 for i in ${NUM_PROCS[@]}; do
     echo $i procs
     count=1

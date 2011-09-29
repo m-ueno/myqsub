@@ -1,0 +1,39 @@
+Queue name:  gh10034
+Exit code :  0
+Start/End :  Fri Sep 30 02:26:17 JST 2011 / Fri Sep 30 02:27:46 JST 2011
+Elapse    :  00:01:29
+
+Reason
+  Request exited normally.
+
+  _Exit() value was 0.
+
+
+Allocated Resource
+  Virtual Nodes                   :        64 Node 
+  Before Free Memory
+    Total Large Page Memory       :         0 Mbyte 
+    Total Normal Page Memory      :  120795955200 Byte
+  After Free Memory
+    Total Large Page Memory       :         0 Mbyte 
+    Total Normal Page Memory      :  120795955200 Byte
+  CPUs                            :        64 CPU 
+  Execmode                        :         CHIP_SHare
+  Elapse time limit               :       600.000 sec
+
+Used Resource
+  Total System CPU Time           :     14361 msec 
+  Total User CPU Time             :   3230586 msec 
+  Total Large Page Memory         :         0 Mbyte 
+  Total Normal Page Memory        :  3190968320 Byte
+  CPUs                            :        64 CPU 
+
+16 procs
+24.8313
+
+32 procs
+32.5392
+
+64 procs
+28.4448
+
