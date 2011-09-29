@@ -76,7 +76,7 @@ int main(int argc, char** argv){
                 fprintf( udata, "%.15E %.15E %.15E\n", (i+1)*h, (j+1)*h, u[j][i] );
             fprintf( udata, "\n" );
         }
-        if(nrank==1) break;
+        if(nrank>1){
         /* output: rank1 ~ n-2 */
         for(int jrank=1; jrank<nrank-1; jrank++){
             //MPI_Recv (&buf,count,datatype,source,tag,comm,&status)
@@ -93,6 +93,7 @@ int main(int argc, char** argv){
             for(i=-1;i<NX;i++)
                 fprintf( udata, "%.15E %.15E %.15E\n", (i+1)*h, ( j+1+(nrank-1)*(height-2) )*h, u[j][i] );
             fprintf( udata, "\n" );
+        }
         }
         fclose(udata);
     } else if (irank<nrank-1) {
