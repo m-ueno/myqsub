@@ -9,14 +9,15 @@ local $Data::Dumper::Terse = 1;
 my @ids;
 
 sub get_ids {
-    my @qs = split(/\n/,`ls -l`);
+    my @qs = split(/\n/,`qs`);
     shift @qs;
+    die "nojobs" if not @qs;
     my $count = 0;
     for my $l (@qs) {
         print $count . ": ";
         print $l . "\n";
 
-        push( @ids, $1 ) if $l =~/(\d\d:\d\d)/;
+        push( @ids, $1 ) if $l =~/(\d+)\.nqs/;
 
         $count++;
     }
@@ -31,9 +32,11 @@ sub input {
 sub myqdel {
     my $num = shift;
     printf ("arg:%i, ids[num]:%s", $num, $ids[$num]);
-    print "\nreally?\n";
+    print "\nreally? ";
     if(chomp(my $in =  <STDIN>) eq 'y' || 'Y' || "\n"){
-        printf ("EXECUTE! arg:%i, ids[num]:%s", $num, $ids[$num]);
+        print "EXECUTE!\n";
+				printf ("arg:%i, ids[num]:%s", $num, $ids[$num]);
+        print `qdel -k $ids[$in]`;
     }
 }
 
