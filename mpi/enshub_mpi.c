@@ -69,8 +69,8 @@ int main(int argc, char** argv){
     if (irank == 0){
         udata = fopen("u.data","w");
         /* output: rank0 */
-        for(j=-1;j<height-2;j+=4){
-            for(i=-1;i<NX;i+=4)
+        for(j=-1;j<height-2;j++){
+            for(i=-1;i<NX;i++)
                 fprintf( udata, "%.15E %.15E %.15E\n", (i+1)*h, (j+1)*h, u[j][i] );
             fprintf( udata, "\n" );
         }
@@ -78,16 +78,16 @@ int main(int argc, char** argv){
         for(int jrank=1; jrank<nrank-1; jrank++){
             //MPI_Recv (&buf,count,datatype,source,tag,comm,&status)
             MPI_Recv( &u[0][-1], width*(height-2), MPI_DOUBLE, jrank, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE );
-            for(j=0;j<height-2;j+=4){
-                for(i=-1;i<NX;i+=4)
+            for(j=0;j<height-2;j++){
+                for(i=-1;i<NX;i++)
                     fprintf( udata, "%.15E %.15E %.15E\n", (i+1)*h, ( j+1+jrank*(height-2) )*h, u[j][i] );
                 fprintf( udata, "\n" );
             }
         }
         /* output: rank_n-1 */
         MPI_Recv( &u[0][-1], width*(height-1), MPI_DOUBLE, nrank-1, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE );
-        for(j=0;j<height-1;j+=4){
-            for(i=-1;i<NX;i+=4)
+        for(j=0;j<height-1;j++){
+            for(i=-1;i<NX;i++)
                 fprintf( udata, "%.15E %.15E %.15E\n", (i+1)*h, ( j+1+(nrank-1)*(height-2) )*h, u[j][i] );
             fprintf( udata, "\n" );
         }
